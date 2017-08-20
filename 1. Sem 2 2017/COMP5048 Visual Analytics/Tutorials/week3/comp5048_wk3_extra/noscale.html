@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+</style>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script>
+
+var width = 1000,
+    height = 600,
+    margin = {"top": 10, "bottom": 10, "left": 10, "right": 10},
+    gap = 10,
+    barheight = 10;
+
+var fruits = [ {"name": "apple", "count": 10093},
+  {"name": "banana", "count": 5487},
+  {"name": "grape", "count": 7994},
+  {"name": "pineapple", "count": 3276}];
+  
+var svg = d3.select("body")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+var border = svg.append("rect")
+    .attr("class", "border")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("stroke", "black")
+    .attr("fill", "none");
+
+var bars = svg.selectAll(".bar")
+    .data(fruits)
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("transform", function (d,i) {return "translate(" + margin.left + "," + (margin.top + i*(gap+barheight)) + ")";})
+    .attr("height", barheight)
+    .attr("width", function (d) {return d.count;})
+    .style("fill", "steelblue")
+    .style("stroke", "black")
+    .style("stroke-width", 2);
+
+bars.append("title")
+    .text(function (d) {return d.name;});
+
+</script>
